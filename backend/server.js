@@ -29,6 +29,10 @@ const startServer = async () => {
       res.json({ status: 'ok', message: 'API is running' });
     });
 
+    app.get('/', (req, res) => {
+      res.send('API is running successfully');
+    });
+
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
