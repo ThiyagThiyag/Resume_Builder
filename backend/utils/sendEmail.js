@@ -12,7 +12,9 @@ const sendEmail = async (options) => {
     // Force IPv4 for Render compatibility
     tls: {
       rejectUnauthorized: true,
-    }
+    },
+    // Explicitly enforce IPv4 socket connection
+    family: 4
   });
 
   const message = {
