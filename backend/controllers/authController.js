@@ -33,26 +33,20 @@ export const register = async (req, res) => {
       return res.status(400).json({ success: false, message: 'User already exists with this email' });
     }
 
-    const otp = generateOTP();
-
-    // Delete any existing OTPs for this email to prevent spam/duplicates
-    await OTP.deleteMany({ email });
-
-    await OTP.create({
+    const user = await User.create({
+      name,
       email,
-      otp,
-    });
-
-    await sendEmail({
-      email,
-      subject: 'Resumify - Verify your email',
-      otp,
+      password,
     });
 
     res.status(201).json({
       success: true,
-      message: 'OTP sent to email',
-      requiresVerification: true,
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+      message: 'Registration successful',
+      requiresVerification: false,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

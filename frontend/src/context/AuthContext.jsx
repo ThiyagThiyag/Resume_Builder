@@ -62,8 +62,13 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, { name, email, password });
       const data = response.data;
+      
+      if (data.token) {
+        localStorage.setItem('userInfo', JSON.stringify(data));
+        setUser(data);
+      }
 
-      return data; // Returns requiresVerification: true
+      return data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Signup failed');
     }

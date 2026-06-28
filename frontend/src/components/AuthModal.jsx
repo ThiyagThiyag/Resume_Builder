@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { X, Mail, Lock, User, AlertCircle, CheckCircle2, KeyRound } from 'lucide-react';
+import { X, Mail, Lock, User, AlertCircle, CheckCircle2, KeyRound, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function AuthModal() {
@@ -14,6 +14,7 @@ export default function AuthModal() {
   const [successMsg, setSuccessMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   // Reset form when modal opens/closes
@@ -27,6 +28,7 @@ export default function AuthModal() {
       setSuccessMsg('');
       setFieldErrors({});
       setIsLoading(false);
+      setShowPassword(false);
     }
   }, [isAuthModalOpen]);
 
@@ -126,6 +128,9 @@ export default function AuthModal() {
         if (res.requiresVerification) {
           setSuccessMsg('OTP sent to your email.');
           setAuthMode('otp');
+        } else {
+          setSuccessMsg('Account created successfully!');
+          finalizeAuth();
         }
       }
     } catch (err) {
@@ -285,16 +290,23 @@ export default function AuthModal() {
                       <div className="relative">
                         <Lock className={`absolute left-3 top-1/2 -translate-y-1/2 ${fieldErrors.password ? 'text-red-400' : 'text-slate-400'}`} size={18} />
                         <input
-                          type="password"
+                          type={showPassword ? "text" : "password"}
                           value={password}
                           onChange={(e) => handleInputChange('password', e.target.value)}
-                          className={`w-full pl-10 pr-4 py-2.5 rounded-xl border outline-none transition-all bg-slate-50/50 ${
+                          className={`w-full pl-10 pr-12 py-2.5 rounded-xl border outline-none transition-all bg-slate-50/50 ${
                             fieldErrors.password 
                             ? 'border-red-500 focus:ring-2 focus:ring-red-200' 
                             : 'border-slate-300 focus:border-brand focus:ring-2 focus:ring-brand/20'
                           }`}
                           placeholder="••••••••"
                         />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none"
+                        >
+                          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
                       </div>
                       <AnimatePresence>
                         {fieldErrors.password && (
