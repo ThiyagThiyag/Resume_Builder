@@ -1,9 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import dns from 'dns';
 import { connectDB } from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import resumeRoutes from './routes/resumeRoutes.js';
+
+// Force IPv4 first to prevent ENETUNREACH errors on Render for Nodemailer
+dns.setDefaultResultOrder('ipv4first');
 
 dotenv.config();
 
