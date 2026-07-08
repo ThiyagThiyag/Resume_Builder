@@ -203,7 +203,7 @@ export default function LandingPage() {
         </section>
 
         {/* Templates Showcase Section */}
-        <section className="bg-slate-900 py-10 md:py-12 border-t border-slate-800 relative overflow-hidden">
+        {/* <section className="bg-slate-900 py-10 md:py-12 border-t border-slate-800 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand/20 blur-[120px] rounded-full pointer-events-none"></div>
 
@@ -263,7 +263,7 @@ export default function LandingPage() {
               })}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Advanced Capabilities Teaser */}
         <section className="bg-slate-50 py-10 md:py-12 border-t border-border/50 relative">
